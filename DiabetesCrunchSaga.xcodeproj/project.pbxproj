@@ -8,13 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		209607991AAAEF0600FA6477 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209607981AAAEF0600FA6477 /* AppDelegate.swift */; };
-		2096079B1AAAEF0600FA6477 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2096079A1AAAEF0600FA6477 /* GameScene.sks */; };
 		2096079D1AAAEF0600FA6477 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2096079C1AAAEF0600FA6477 /* GameScene.swift */; };
 		2096079F1AAAEF0600FA6477 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2096079E1AAAEF0600FA6477 /* GameViewController.swift */; };
 		209607A21AAAEF0600FA6477 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 209607A01AAAEF0600FA6477 /* Main.storyboard */; };
 		209607A41AAAEF0600FA6477 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 209607A31AAAEF0600FA6477 /* Images.xcassets */; };
 		209607A71AAAEF0600FA6477 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209607A51AAAEF0600FA6477 /* LaunchScreen.xib */; };
 		209607B31AAAEF0700FA6477 /* DiabetesCrunchSagaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209607B21AAAEF0700FA6477 /* DiabetesCrunchSagaTests.swift */; };
+		209607BD1AAAF53100FA6477 /* Sprites.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 209607BC1AAAF53100FA6477 /* Sprites.atlas */; };
+		209607C71AAAF82F00FA6477 /* Cookie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209607C61AAAF82F00FA6477 /* Cookie.swift */; };
+		209607C91AAAFA0F00FA6477 /* Array2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209607C81AAAFA0F00FA6477 /* Array2D.swift */; };
+		209607CB1AAAFA7F00FA6477 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209607CA1AAAFA7F00FA6477 /* Set.swift */; };
+		209607CD1AAAFAFA00FA6477 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209607CC1AAAFAFA00FA6477 /* Level.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,7 +35,6 @@
 		209607931AAAEF0600FA6477 /* DiabetesCrunchSaga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiabetesCrunchSaga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		209607971AAAEF0600FA6477 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		209607981AAAEF0600FA6477 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2096079A1AAAEF0600FA6477 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		2096079C1AAAEF0600FA6477 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		2096079E1AAAEF0600FA6477 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		209607A11AAAEF0600FA6477 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -40,6 +43,11 @@
 		209607AC1AAAEF0700FA6477 /* DiabetesCrunchSagaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiabetesCrunchSagaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		209607B11AAAEF0700FA6477 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		209607B21AAAEF0700FA6477 /* DiabetesCrunchSagaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiabetesCrunchSagaTests.swift; sourceTree = "<group>"; };
+		209607BC1AAAF53100FA6477 /* Sprites.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Sprites.atlas; sourceTree = "<group>"; };
+		209607C61AAAF82F00FA6477 /* Cookie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cookie.swift; sourceTree = "<group>"; };
+		209607C81AAAFA0F00FA6477 /* Array2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array2D.swift; sourceTree = "<group>"; };
+		209607CA1AAAFA7F00FA6477 /* Set.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
+		209607CC1AAAFAFA00FA6477 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,9 +89,13 @@
 		209607951AAAEF0600FA6477 /* DiabetesCrunchSaga */ = {
 			isa = PBXGroup;
 			children = (
+				209607BC1AAAF53100FA6477 /* Sprites.atlas */,
 				209607981AAAEF0600FA6477 /* AppDelegate.swift */,
-				2096079A1AAAEF0600FA6477 /* GameScene.sks */,
 				2096079C1AAAEF0600FA6477 /* GameScene.swift */,
+				209607C61AAAF82F00FA6477 /* Cookie.swift */,
+				209607C81AAAFA0F00FA6477 /* Array2D.swift */,
+				209607CA1AAAFA7F00FA6477 /* Set.swift */,
+				209607CC1AAAFAFA00FA6477 /* Level.swift */,
 				2096079E1AAAEF0600FA6477 /* GameViewController.swift */,
 				209607A01AAAEF0600FA6477 /* Main.storyboard */,
 				209607A31AAAEF0600FA6477 /* Images.xcassets */,
@@ -200,8 +212,8 @@
 			files = (
 				209607A71AAAEF0600FA6477 /* LaunchScreen.xib in Resources */,
 				209607A41AAAEF0600FA6477 /* Images.xcassets in Resources */,
-				2096079B1AAAEF0600FA6477 /* GameScene.sks in Resources */,
 				209607A21AAAEF0600FA6477 /* Main.storyboard in Resources */,
+				209607BD1AAAF53100FA6477 /* Sprites.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,8 +232,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				2096079D1AAAEF0600FA6477 /* GameScene.swift in Sources */,
+				209607CD1AAAFAFA00FA6477 /* Level.swift in Sources */,
+				209607C71AAAF82F00FA6477 /* Cookie.swift in Sources */,
+				209607CB1AAAFA7F00FA6477 /* Set.swift in Sources */,
 				2096079F1AAAEF0600FA6477 /* GameViewController.swift in Sources */,
 				209607991AAAEF0600FA6477 /* AppDelegate.swift in Sources */,
+				209607C91AAAFA0F00FA6477 /* Array2D.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
