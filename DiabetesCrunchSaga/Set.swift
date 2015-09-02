@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Sucker Punch Ltd. All rights reserved.
 //
 
-struct Set<T: Hashable>: SequenceType, Printable {
+struct ASet<T: Hashable>: SequenceType, Printable {
     private var dictionary = Dictionary<T, Bool>()
     
     mutating func addElement(newElement: T) {
@@ -29,8 +29,8 @@ struct Set<T: Hashable>: SequenceType, Printable {
         return dictionary.count
     }
     
-    func unionSet(otherSet: Set<T>) -> Set<T> {
-        var combined = Set<T>()
+    func unionSet(otherSet: ASet<T>) -> ASet<T> {
+        var combined = ASet<T>()
         
         for obj in dictionary.keys {
             combined.dictionary[obj] = true

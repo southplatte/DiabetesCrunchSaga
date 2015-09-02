@@ -8,14 +8,14 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder) is not used in this app")
-    }
+class GameScene:SKScene {
+    
+    var swipeHandler: ((Swap) -> ())?
     
     var level: Level!
     var swipeFromColumn: Int?
     var swipeFromRow: Int?
+    var selectionSprite = SKSpriteNode()
     
     let TileWidth: CGFloat = 32.0
     let TileHeight: CGFloat = 36.0
@@ -23,6 +23,10 @@ class GameScene: SKScene {
     let gameLayer = SKNode()
     let cookiesLayer = SKNode()
     let tilesLayer = SKNode()
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder) is not used in this app")
+    }
     
     override init(size: CGSize) {
         super.init(size: size)
@@ -45,7 +49,7 @@ class GameScene: SKScene {
         swipeFromColumn = nil
         swipeFromRow = nil
     }
-    func addSpritesForCookies(cookies: Set<Cookie>) {
+    func addSpritesForCookies(cookies: ASet<Cookie>) {
         for cookie in cookies {
             let sprite = SKSpriteNode(imageNamed: cookie.cookieType.spriteName)
             sprite.position = pointForColumn(cookie.column, row:cookie.row)
@@ -80,6 +84,66 @@ class GameScene: SKScene {
         }
     }
     
+    func trySwapHorizontal(horzDelta: Int, vertical vertDelta: Int){
+        //1
+        let toColumn = swipeFromColumn! + horzDelta
+        let toRow = swipeFromRow! + vertDelta
+        //2
+        if toColumn < 0 || toColumn >= NumColumns { return }
+        if toRow < 0 || toRow >= NumRows { return }
+        //3
+        if let toCookie = level.cookieAtColumn(toColumn, row: toRow) {
+            if let fromCookie = level.cookieAtColumn(swipeFromColumn!, row: swipeFromRow!){
+                //4
+                if let handler = swipeHandler {
+                    let swap = Swap(cookieA: fromCookie, cookieB: toCookie)
+                    handler(swap)
+                }
+            }
+        }
+        
+    }
+    
+    func animateSwap(swap: Swap, completion: () -> ()){
+        let spriteA = swap.cookieA.sprite!
+        let spriteB = swap.cookieB.sprite!
+        
+        spriteA.zPosition = 100
+        spriteB.zPosition = 90
+        
+        let Duration: NSTimeInterval = 0.3
+        
+        let moveA = SKAction.moveTo(spriteB.position, duration: Duration)
+        moveA.timingMode = .EaseOut
+        spriteA.runAction(moveA, completion: completion)
+        
+        let moveB = SKAction.moveTo(spriteA.position, duration: Duration)
+        moveB.timingMode = .EaseOut
+        spriteB.runAction(moveB)
+        
+    }
+    
+    func showSelectionIndicatorforCookie(cookie: Cookie){
+        if selectionSprite.parent != nil {
+            selectionSprite.removeFromParent()
+        }
+        
+        if let sprite = cookie.sprite{
+            let texture = SKTexture(imageNamed: cookie.cookieType.highlightedSpriteName)
+            selectionSprite.size = texture.size()
+            selectionSprite.runAction(SKAction.setTexture(texture))
+            
+            sprite.addChild(selectionSprite)
+            selectionSprite.alpha = 1.0
+        }
+    }
+    
+    func hideSelectionIndicator(){
+        selectionSprite.runAction(SKAction.sequence([
+            SKAction.fadeOutWithDuration(0.3),
+            SKAction.removeFromParent()]))
+    }
+    
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         // 1
         let touch = touches.first as! UITouch
@@ -92,6 +156,7 @@ class GameScene: SKScene {
                 // 4
                 swipeFromColumn = column
                 swipeFromRow = row
+                showSelectionIndicatorforCookie(cookie)
             }
         }
     }
@@ -120,7 +185,8 @@ class GameScene: SKScene {
             
             //4
             if horzDelta != 0 || vertDelta != 0 {
-                trySwapHorizontal(horzdela, vertical: vertDelta)
+                trySwapHorizontal(horzDelta, vertical: vertDelta)
+                hideSelectionIndicator()
                 //5
                 swipeFromColumn = nil
             }
@@ -128,27 +194,14 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if selectionSprite.parent != nil && swipeFromColumn != nil {
+            hideSelectionIndicator()
+        }
         swipeFromColumn = nil
         swipeFromRow = nil
     }
     
     override func touchesCancelled(touches: Set<NSObject>, withEvent event: UIEvent){
         touchesEnded(touches, withEvent: event)
-    }
-    
-    func trySwapHorizontal(horzDelta: Int, vertical vertDelta: Int){
-        //1
-        let toColumn = swipeFromColumn! + horzDelta
-        let toRow = swipeFromRow! + vertDelta
-        //2
-        if toColumn < 0 || toColumn >= NumColumns { return }
-        if toRow < 0 || toRow >= NumRows { return }
-        //3
-        if let toCookie = level.cookieAtColumn(toColumn, row: toRow) {
-            if let fromCookie = level.cookieAtColumn(swipeFromColumn!, row: swipeFromRow!){
-                //4
-                println("*** swapping \(fromCookie) with \(toCookie)")
-            }
-        }
     }
 }
