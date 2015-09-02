@@ -9,7 +9,7 @@ import Foundation
 
 extension Dictionary {
     static func loadJSONFromBundle(filename: String) -> Dictionary<String, AnyObject>? {
-        if let path = NSBundle.mainBundle().pathForResource(filename, ofType: "json") {
+        if let path = NSBundle.mainBundle().pathForResource(filename, ofType: "json", inDirectory: "Levels") {
             
             var error: NSError?
             let data = NSData(contentsOfFile: path, options: NSDataReadingOptions(), error: &error)
