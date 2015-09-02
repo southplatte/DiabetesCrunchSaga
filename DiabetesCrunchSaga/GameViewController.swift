@@ -36,7 +36,7 @@ class GameViewController: UIViewController {
         scene = GameScene(size: skView.bounds.size)
         scene.scaleMode = .AspectFill
         
-        level = Level(filename: "Level_1")
+        level = Level(filename: "Level_0")
         scene.level = level
         scene.addTiles()
         
@@ -57,10 +57,15 @@ class GameViewController: UIViewController {
     func handleSwipe(swap: Swap){
         view.userInteractionEnabled = false
         
-        level.performSwap(swap)
-        
-        scene.animateSwap(swap){
-            self.view.userInteractionEnabled = true
+        if level.isPossibleSwap(swap){
+            level.performSwap(swap)
+            scene.animateSwap(swap){
+                self.view.userInteractionEnabled = true
+            }
+        } else {
+            scene.animateInvalidSwap(swap) {
+                self.view.userInteractionEnabled = true
+            }
         }
     }
 }
