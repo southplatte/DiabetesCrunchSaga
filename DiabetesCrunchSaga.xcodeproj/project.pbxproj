@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,7 +11,7 @@
 		20251A601B9756B0002971A5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20251A5F1B9756B0002971A5 /* Extensions.swift */; };
 		20251A621B975D3A002971A5 /* Levels in Resources */ = {isa = PBXBuildFile; fileRef = 20251A611B975D3A002971A5 /* Levels */; };
 		20251A641B978673002971A5 /* Swap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20251A631B978673002971A5 /* Swap.swift */; };
-		20251A661B97A52A002971A5 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 20251A651B97A52A002971A5 /* Sounds */; };
+		20251A681B97A86B002971A5 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 20251A671B97A86B002971A5 /* Sounds */; };
 		209607991AAAEF0600FA6477 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209607981AAAEF0600FA6477 /* AppDelegate.swift */; };
 		2096079D1AAAEF0600FA6477 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2096079C1AAAEF0600FA6477 /* GameScene.swift */; };
 		2096079F1AAAEF0600FA6477 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2096079E1AAAEF0600FA6477 /* GameViewController.swift */; };
@@ -41,7 +41,7 @@
 		20251A5F1B9756B0002971A5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		20251A611B975D3A002971A5 /* Levels */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Levels; path = ../../../../Downloads/Resources/Levels; sourceTree = "<group>"; };
 		20251A631B978673002971A5 /* Swap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swap.swift; sourceTree = "<group>"; };
-		20251A651B97A52A002971A5 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
+		20251A671B97A86B002971A5 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = ../../../../Downloads/Resources/Sounds; sourceTree = "<group>"; };
 		209607931AAAEF0600FA6477 /* DiabetesCrunchSaga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiabetesCrunchSaga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		209607971AAAEF0600FA6477 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		209607981AAAEF0600FA6477 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 		209607951AAAEF0600FA6477 /* DiabetesCrunchSaga */ = {
 			isa = PBXGroup;
 			children = (
-				20251A651B97A52A002971A5 /* Sounds */,
+				20251A671B97A86B002971A5 /* Sounds */,
 				20251A611B975D3A002971A5 /* Levels */,
 				209607BC1AAAF53100FA6477 /* Sprites.atlas */,
 				209607981AAAEF0600FA6477 /* AppDelegate.swift */,
@@ -202,7 +202,7 @@
 				};
 			};
 			buildConfigurationList = 2096078E1AAAEF0600FA6477 /* Build configuration list for PBXProject "DiabetesCrunchSaga" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -225,7 +225,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20251A661B97A52A002971A5 /* Sounds in Resources */,
+				20251A681B97A86B002971A5 /* Sounds in Resources */,
 				20251A621B975D3A002971A5 /* Levels in Resources */,
 				209607A71AAAEF0600FA6477 /* LaunchScreen.xib in Resources */,
 				209607A41AAAEF0600FA6477 /* Images.xcassets in Resources */,
