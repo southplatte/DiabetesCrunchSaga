@@ -11,10 +11,14 @@ import Foundation
 let NumColumns = 9
 let NumRows = 9
 
+
 class Level {
     private var cookies = Array2D<Cookie>(columns: NumColumns, rows: NumRows)
     private var tiles = Array2D<Tile>(columns: NumColumns, rows: NumRows)
     private var possibleSwaps = ASet<Swap>()
+    
+    var targetScore = 0
+    var maximumMoves = 0
     
     init(filename: String){
         //1
@@ -32,6 +36,9 @@ class Level {
                         }
                     }
                 }
+                
+                targetScore = dictionary["targetScore"] as! Int
+                maximumMoves = dictionary["moves"] as! Int
             }
         }
     }
@@ -133,6 +140,9 @@ class Level {
         
         removeCookies(horizontalChains)
         removeCookies(verticalChains)
+        
+        calculateScores(horizontalChains)
+        calculateScores(verticalChains)
         
         return horizontalChains.union(verticalChains)
     }
@@ -307,6 +317,12 @@ class Level {
             for cookie in chain.cookies {
                 cookies[cookie.column, cookie.row] = nil
             }
+        }
+    }
+    
+    private func calculateScores(chains: Set<Chain>){
+        for chain in chains {
+            chain.score = 60 * (chain.length - 2)
         }
     }
 }

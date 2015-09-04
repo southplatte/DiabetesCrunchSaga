@@ -23,6 +23,8 @@ class Chain: Hashable, Printable {
         }
     }
     
+    var score = 0
+    
     var chainType: ChainType
     
     init(chainType: ChainType) {
