@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 47;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,7 @@
 		20251A621B975D3A002971A5 /* Levels in Resources */ = {isa = PBXBuildFile; fileRef = 20251A611B975D3A002971A5 /* Levels */; };
 		20251A641B978673002971A5 /* Swap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20251A631B978673002971A5 /* Swap.swift */; };
 		20251A681B97A86B002971A5 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 20251A671B97A86B002971A5 /* Sounds */; };
+		20251A6A1B97B485002971A5 /* Chain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20251A691B97B485002971A5 /* Chain.swift */; };
 		209607991AAAEF0600FA6477 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209607981AAAEF0600FA6477 /* AppDelegate.swift */; };
 		2096079D1AAAEF0600FA6477 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2096079C1AAAEF0600FA6477 /* GameScene.swift */; };
 		2096079F1AAAEF0600FA6477 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2096079E1AAAEF0600FA6477 /* GameViewController.swift */; };
@@ -42,6 +43,7 @@
 		20251A611B975D3A002971A5 /* Levels */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Levels; path = ../../../../Downloads/Resources/Levels; sourceTree = "<group>"; };
 		20251A631B978673002971A5 /* Swap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swap.swift; sourceTree = "<group>"; };
 		20251A671B97A86B002971A5 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = ../../../../Downloads/Resources/Sounds; sourceTree = "<group>"; };
+		20251A691B97B485002971A5 /* Chain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chain.swift; sourceTree = "<group>"; };
 		209607931AAAEF0600FA6477 /* DiabetesCrunchSaga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiabetesCrunchSaga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		209607971AAAEF0600FA6477 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		209607981AAAEF0600FA6477 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				209607C81AAAFA0F00FA6477 /* Array2D.swift */,
 				209607C61AAAF82F00FA6477 /* Cookie.swift */,
 				20251A5F1B9756B0002971A5 /* Extensions.swift */,
+				20251A691B97B485002971A5 /* Chain.swift */,
 				2096079C1AAAEF0600FA6477 /* GameScene.swift */,
 				2096079E1AAAEF0600FA6477 /* GameViewController.swift */,
 				209607CC1AAAFAFA00FA6477 /* Level.swift */,
@@ -189,7 +192,7 @@
 		2096078B1AAAEF0600FA6477 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Sucker Punch Ltd.";
 				TargetAttributes = {
 					209607921AAAEF0600FA6477 = {
@@ -202,7 +205,7 @@
 				};
 			};
 			buildConfigurationList = 2096078E1AAAEF0600FA6477 /* Build configuration list for PBXProject "DiabetesCrunchSaga" */;
-			compatibilityVersion = "Xcode 6.3";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -251,6 +254,7 @@
 				2096079D1AAAEF0600FA6477 /* GameScene.swift in Sources */,
 				20251A601B9756B0002971A5 /* Extensions.swift in Sources */,
 				209607CD1AAAFAFA00FA6477 /* Level.swift in Sources */,
+				20251A6A1B97B485002971A5 /* Chain.swift in Sources */,
 				209607C71AAAF82F00FA6477 /* Cookie.swift in Sources */,
 				20251A641B978673002971A5 /* Swap.swift in Sources */,
 				20251A5E1B97569C002971A5 /* Tile.swift in Sources */,
@@ -333,7 +337,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -370,7 +374,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
