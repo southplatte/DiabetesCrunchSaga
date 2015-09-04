@@ -16,6 +16,8 @@ class Level {
     private var cookies = Array2D<Cookie>(columns: NumColumns, rows: NumRows)
     private var tiles = Array2D<Tile>(columns: NumColumns, rows: NumRows)
     private var possibleSwaps = ASet<Swap>()
+    private var comboMultiplier = 0
+    
     
     var targetScore = 0
     var maximumMoves = 0
@@ -208,6 +210,10 @@ class Level {
         return columns
     }
     
+    func resetComboMultiplier(){
+        comboMultiplier = 1
+    }
+    
     private func createInitialCookies() -> ASet<Cookie> {
         var set = ASet<Cookie>()
         
@@ -322,7 +328,8 @@ class Level {
     
     private func calculateScores(chains: Set<Chain>){
         for chain in chains {
-            chain.score = 60 * (chain.length - 2)
+            chain.score = 60 * (chain.length - 2) * comboMultiplier
+            ++comboMultiplier
         }
     }
 }

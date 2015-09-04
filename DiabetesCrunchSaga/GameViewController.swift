@@ -56,6 +56,7 @@ class GameViewController: UIViewController {
         movesLeft = level.maximumMoves
         score = 0
         updateLabels()
+        level.resetComboMultiplier()
         shuffle()
     }
     
@@ -102,7 +103,9 @@ class GameViewController: UIViewController {
     }
     
     func beginNextTurn(){
+        level.resetComboMultiplier()
         level.detectPossibleSwaps()
+        decrementMoves()
         view.userInteractionEnabled = true
     }
     
@@ -111,5 +114,10 @@ class GameViewController: UIViewController {
         movesLabel.text = String(format: "%ld", movesLeft)
         scoreLabel.text = String(format: "%ld", score)
         
+    }
+    
+    func decrementMoves(){
+        --movesLeft
+        updateLabels()
     }
 }
