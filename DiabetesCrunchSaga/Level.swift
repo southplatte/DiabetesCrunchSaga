@@ -188,8 +188,9 @@ class Level {
         for column in 0..<NumColumns {
             var array = [Cookie]()
             // 1
-            var row = NumRows - 1;
-            row.stride(to: 0, by: -1).forEach(cookies[column, row]==nil) {
+            let row = NumRows - 1;
+            while(cookies[column, row]==nil){
+                for row in stride(from: row, to: 0, by: -1) {
             //for var row = NumRows - 1; row >= 0 && cookies[column, row] == nil; row -= 1 {
                 // 2
                 if tiles[column, row] != nil {
@@ -203,6 +204,7 @@ class Level {
                     let cookie = Cookie(column: column, row: row, cookieType: cookieType)
                     cookies[column, row] = cookie
                     array.append(cookie)
+                }
                 }
             }
             // 5
@@ -248,8 +250,14 @@ class Level {
         let cookieType = cookies[column, row]!.cookieType
         
         var horzLength = 1
-        for var i = column - 1; i >= 0 && cookies[i, row]?.cookieType == cookieType;
-            i-=1, horzLength+=1 { }
+        var i = column - 1
+        while (cookies[i, row]?cookieType == cookieType){
+            for i in stride(from: i, to: 0, by: -1){
+        //for var i = column - 1; i >= 0 && cookies[i, row]?.cookieType == cookieType;
+            //i-=1
+                horzLength = horzLength + 1 { }
+            }
+        }
         for var i = column + 1; i < NumColumns && cookies[i, row]?.cookieType == cookieType;
             i+=1, horzLength+=1 { }
         if horzLength >= 3 { return true }

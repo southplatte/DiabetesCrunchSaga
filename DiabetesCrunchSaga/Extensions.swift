@@ -11,13 +11,13 @@ extension Dictionary {
     static func loadJSONFromBundle(_ filename: String) -> Dictionary<String, AnyObject>? {
         if let path = Bundle.main.path(forResource: filename, ofType: "json", inDirectory: "Levels") {
             
-            var error: NSError?
+            let error: NSError?
             
             do{
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: NSData.ReadingOptions())
                 if let data = data as Data?{
                     
-                    let dictionary: AnyObject? = try JSONSerialization.jsonObject(with: data,
+                    let dictionary: Any? = try JSONSerialization.jsonObject(with: data,
                         options: JSONSerialization.ReadingOptions())
                     if let dictionary = dictionary as? Dictionary<String, AnyObject> {
                         return dictionary
