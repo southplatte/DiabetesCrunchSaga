@@ -20,16 +20,20 @@ class GameViewController: UIViewController {
     @IBOutlet weak var movesLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return true
     }
     
-    override func supportedInterfaceOrientations() -> Int {
-        return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+//    override func supportedInterfaceOrientations() -> Int {
+//        return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+//    }
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        let orientation: UIInterfaceOrientationMask = [UIInterfaceOrientationMask.portrait, UIInterfaceOrientationMask.portraitUpsideDown]
+        return orientation
     }
     
     override func viewDidLoad() {
@@ -37,11 +41,11 @@ class GameViewController: UIViewController {
         
         // Configure the view.
         let skView = view as! SKView
-        skView.multipleTouchEnabled = false
+        skView.isMultipleTouchEnabled = false
         
         // Create and configure the scene.
         scene = GameScene(size: skView.bounds.size)
-        scene.scaleMode = .AspectFill
+        scene.scaleMode = .aspectFill
         
         level = Level(filename: "Level_0")
         scene.level = level
@@ -65,17 +69,17 @@ class GameViewController: UIViewController {
         scene.addSpritesForCookies(newCookies)
     }
     
-    func handleSwipe(swap: Swap) {
+    func handleSwipe(_ swap: Swap) {
         // While cookies are being matched and new cookies fall down to fill up
         // the holes, we don't want the player to tap on anything.
-        view.userInteractionEnabled = false
+        view.isUserInteractionEnabled = false
         
-        if level.isPossibleSwap(swap) {
-            level.performSwap(swap)
+        if level.isPossibleSwap(swap: swap) {
+            level.performSwap(swap: swap)
             scene.animateSwap(swap, completion: handleMatches)
         } else {
             scene.animateInvalidSwap(swap) {
-                self.view.userInteractionEnabled = true
+                self.view.isUserInteractionEnabled = true
             }
         }
     }
@@ -106,7 +110,7 @@ class GameViewController: UIViewController {
         level.resetComboMultiplier()
         level.detectPossibleSwaps()
         decrementMoves()
-        view.userInteractionEnabled = true
+        view.isUserInteractionEnabled = true
     }
     
     func updateLabels(){
@@ -117,7 +121,7 @@ class GameViewController: UIViewController {
     }
     
     func decrementMoves(){
-        --movesLeft
+        movesLeft -= 1
         updateLabels()
     }
 }

@@ -58,7 +58,7 @@ class GameScene:SKScene {
         
         SKLabelNode(fontNamed: "GillSans-BoldItalic")
     }
-    func addSpritesForCookies(cookies: ASet<Cookie>) {
+    func addSpritesForCookies(_ cookies: ASet<Cookie>) {
         for cookie in cookies {
             let sprite = SKSpriteNode(imageNamed: cookie.cookieType.spriteName)
             sprite.position = pointForColumn(cookie.column, row:cookie.row)
@@ -67,13 +67,13 @@ class GameScene:SKScene {
         }
     }
     
-    func pointForColumn(column: Int, row: Int) -> CGPoint {
+    func pointForColumn(_ column: Int, row: Int) -> CGPoint {
         return CGPoint(
             x: CGFloat(column)*TileWidth + TileWidth/2,
             y: CGFloat(row)*TileHeight + TileHeight/2)
     }
     
-    func convertPoint(point: CGPoint) -> (success: Bool, column: Int, row: Int){
+    func convertPoint(_ point: CGPoint) -> (success: Bool, column: Int, row: Int){
         if point.x >= 0 && point.x < CGFloat(NumColumns)*TileWidth && point.y >= 0 && point.y < CGFloat(NumRows)*TileHeight{
             return (true, Int(point.x / TileWidth), Int(point.y / TileHeight))
         } else {
@@ -84,7 +84,7 @@ class GameScene:SKScene {
     func addTiles(){
         for row in 0..<NumRows{
             for column in 0..<NumColumns{
-                if let tile = level.TileAtColumn(column, row: row){
+                if let tile = level.TileAtColumn(column: column, row: row){
                     let tileNode = SKSpriteNode(imageNamed: "Tile")
                     tileNode.position = pointForColumn(column, row: row)
                     tilesLayer.addChild(tileNode)
@@ -93,7 +93,7 @@ class GameScene:SKScene {
         }
     }
     
-    func trySwapHorizontal(horzDelta: Int, vertical vertDelta: Int){
+    func trySwapHorizontal(_ horzDelta: Int, vertical vertDelta: Int){
         //1
         let toColumn = swipeFromColumn! + horzDelta
         let toRow = swipeFromRow! + vertDelta
@@ -101,8 +101,8 @@ class GameScene:SKScene {
         if toColumn < 0 || toColumn >= NumColumns { return }
         if toRow < 0 || toRow >= NumRows { return }
         //3
-        if let toCookie = level.cookieAtColumn(toColumn, row: toRow) {
-            if let fromCookie = level.cookieAtColumn(swipeFromColumn!, row: swipeFromRow!){
+        if let toCookie = level.cookieAtColumn(column: toColumn, row: toRow) {
+            if let fromCookie = level.cookieAtColumn(column: swipeFromColumn!, row: swipeFromRow!){
                 //4
                 if let handler = swipeHandler {
                     let swap = Swap(cookieA: fromCookie, cookieB: toCookie)
@@ -113,129 +113,129 @@ class GameScene:SKScene {
         
     }
     
-    func animateSwap(swap: Swap, completion: () -> ()){
+    func animateSwap(_ swap: Swap, completion: @escaping () -> ()){
         let spriteA = swap.cookieA.sprite!
         let spriteB = swap.cookieB.sprite!
         
         spriteA.zPosition = 100
         spriteB.zPosition = 90
         
-        let Duration: NSTimeInterval = 0.3
+        let Duration: TimeInterval = 0.3
         
-        let moveA = SKAction.moveTo(spriteB.position, duration: Duration)
-        moveA.timingMode = .EaseOut
-        spriteA.runAction(moveA, completion: completion)
+        let moveA = SKAction.move(to: spriteB.position, duration: Duration)
+        moveA.timingMode = .easeOut
+        spriteA.run(moveA, completion: completion)
         
-        let moveB = SKAction.moveTo(spriteA.position, duration: Duration)
-        moveB.timingMode = .EaseOut
-        spriteB.runAction(moveB)
-        runAction(swapSound)
+        let moveB = SKAction.move(to: spriteA.position, duration: Duration)
+        moveB.timingMode = .easeOut
+        spriteB.run(moveB)
+        run(swapSound)
     }
     
-    func animateInvalidSwap(swap: Swap, completion: () -> ()) {
+    func animateInvalidSwap(_ swap: Swap, completion: @escaping () -> ()) {
         let spriteA = swap.cookieA.sprite!
         let spriteB = swap.cookieB.sprite!
         
         spriteA.zPosition = 100
         spriteB.zPosition = 90
         
-        let Duration: NSTimeInterval = 0.2
+        let Duration: TimeInterval = 0.2
         
-        let moveA = SKAction.moveTo(spriteB.position, duration: Duration)
-        moveA.timingMode = .EaseOut
+        let moveA = SKAction.move(to: spriteB.position, duration: Duration)
+        moveA.timingMode = .easeOut
         
-        let moveB = SKAction.moveTo(spriteA.position, duration: Duration)
-        moveB.timingMode = .EaseOut
+        let moveB = SKAction.move(to: spriteA.position, duration: Duration)
+        moveB.timingMode = .easeOut
         
-        spriteA.runAction(SKAction.sequence([moveA, moveB]), completion: completion)
-        spriteB.runAction(SKAction.sequence([moveB, moveA]))
-        runAction(invalidSwapSound)
+        spriteA.run(SKAction.sequence([moveA, moveB]), completion: completion)
+        spriteB.run(SKAction.sequence([moveB, moveA]))
+        run(invalidSwapSound)
     }
     
-    func animateMatchedCookies(chains: Set<Chain>, completion: () -> ()) {
+    func animateMatchedCookies(_ chains: Set<Chain>, completion: @escaping () -> ()) {
         for chain in chains {
             animateScoreForChain(chain)
             for cookie in chain.cookies {
                 if let sprite = cookie.sprite {
-                    if sprite.actionForKey("removing") == nil {
-                        let scaleAction = SKAction.scaleTo(0.1, duration: 0.3)
-                        scaleAction.timingMode = .EaseOut
-                        sprite.runAction(SKAction.sequence([scaleAction, SKAction.removeFromParent()]),
+                    if sprite.action(forKey: "removing") == nil {
+                        let scaleAction = SKAction.scale(to: 0.1, duration: 0.3)
+                        scaleAction.timingMode = .easeOut
+                        sprite.run(SKAction.sequence([scaleAction, SKAction.removeFromParent()]),
                             withKey:"removing")
                     }
                 }
             }
         }
-        runAction(matchSound)
-        runAction(SKAction.waitForDuration(0.3), completion: completion)
+        run(matchSound)
+        run(SKAction.wait(forDuration: 0.3), completion: completion)
     }
     
-    func animateFallingCookies(columns: [[Cookie]], completion: () -> ()) {
+    func animateFallingCookies(_ columns: [[Cookie]], completion: @escaping () -> ()) {
         // 1
-        var longestDuration: NSTimeInterval = 0
+        var longestDuration: TimeInterval = 0
         for array in columns {
-            for (idx, cookie) in enumerate(array) {
+            for (idx, cookie) in array.enumerated() {
                 let newPosition = pointForColumn(cookie.column, row: cookie.row)
                 // 2
-                let delay = 0.05 + 0.15*NSTimeInterval(idx)
+                let delay = 0.05 + 0.15*TimeInterval(idx)
                 // 3
                 let sprite = cookie.sprite!
-                let duration = NSTimeInterval(((sprite.position.y - newPosition.y) / TileHeight) * 0.1)
+                let duration = TimeInterval(((sprite.position.y - newPosition.y) / TileHeight) * 0.1)
                 // 4
                 longestDuration = max(longestDuration, duration + delay)
                 // 5
-                let moveAction = SKAction.moveTo(newPosition, duration: duration)
-                moveAction.timingMode = .EaseOut
-                sprite.runAction(
+                let moveAction = SKAction.move(to: newPosition, duration: duration)
+                moveAction.timingMode = .easeOut
+                sprite.run(
                     SKAction.sequence([
-                        SKAction.waitForDuration(delay),
+                        SKAction.wait(forDuration: delay),
                         SKAction.group([moveAction, fallingCookieSound])]))
             }
         }
         // 6
-        runAction(SKAction.waitForDuration(longestDuration), completion: completion)
+        run(SKAction.wait(forDuration: longestDuration), completion: completion)
     }
     
-    func animateNewCookies(columns: [[Cookie]], completion: () -> ()) {
+    func animateNewCookies(_ columns: [[Cookie]], completion: @escaping () -> ()) {
         // 1
-        var longestDuration: NSTimeInterval = 0
+        var longestDuration: TimeInterval = 0
         
         for array in columns {
             // 2
             let startRow = array[0].row + 1
             
-            for (idx, cookie) in enumerate(array) {
+            for (idx, cookie) in array.enumerated() {
                 // 3
                 let sprite = SKSpriteNode(imageNamed: cookie.cookieType.spriteName)
                 sprite.position = pointForColumn(cookie.column, row: startRow)
                 cookiesLayer.addChild(sprite)
                 cookie.sprite = sprite
                 // 4
-                let delay = 0.1 + 0.2 * NSTimeInterval(array.count - idx - 1)
+                let delay = 0.1 + 0.2 * TimeInterval(array.count - idx - 1)
                 // 5
-                let duration = NSTimeInterval(startRow - cookie.row) * 0.1
+                let duration = TimeInterval(startRow - cookie.row) * 0.1
                 longestDuration = max(longestDuration, duration + delay)
                 // 6
                 let newPosition = pointForColumn(cookie.column, row: cookie.row)
-                let moveAction = SKAction.moveTo(newPosition, duration: duration)
-                moveAction.timingMode = .EaseOut
+                let moveAction = SKAction.move(to: newPosition, duration: duration)
+                moveAction.timingMode = .easeOut
                 sprite.alpha = 0
-                sprite.runAction(
+                sprite.run(
                     SKAction.sequence([
-                        SKAction.waitForDuration(delay),
+                        SKAction.wait(forDuration: delay),
                         SKAction.group([
-                            SKAction.fadeInWithDuration(0.05),
+                            SKAction.fadeIn(withDuration: 0.05),
                             moveAction,
                             addCookieSound])
                         ]))
             }
         }
         // 7
-        runAction(SKAction.waitForDuration(longestDuration), completion: completion)
+        run(SKAction.wait(forDuration: longestDuration), completion: completion)
     }
 
     
-    func showSelectionIndicatorforCookie(cookie: Cookie){
+    func showSelectionIndicatorforCookie(_ cookie: Cookie){
         if selectionSprite.parent != nil {
             selectionSprite.removeFromParent()
         }
@@ -243,7 +243,7 @@ class GameScene:SKScene {
         if let sprite = cookie.sprite{
             let texture = SKTexture(imageNamed: cookie.cookieType.highlightedSpriteName)
             selectionSprite.size = texture.size()
-            selectionSprite.runAction(SKAction.setTexture(texture))
+            selectionSprite.run(SKAction.setTexture(texture))
             
             sprite.addChild(selectionSprite)
             selectionSprite.alpha = 1.0
@@ -251,12 +251,12 @@ class GameScene:SKScene {
     }
     
     func hideSelectionIndicator(){
-        selectionSprite.runAction(SKAction.sequence([
-            SKAction.fadeOutWithDuration(0.3),
+        selectionSprite.run(SKAction.sequence([
+            SKAction.fadeOut(withDuration: 0.3),
             SKAction.removeFromParent()]))
     }
     
-    func animateScoreForChain(chain: Chain){
+    func animateScoreForChain(_ chain: Chain){
         let firstSprite = chain.firstCookie().sprite!
         let lastSprite = chain.lastCookie().sprite!
         let centerPosition = CGPoint(
@@ -271,20 +271,20 @@ class GameScene:SKScene {
         scoreLabel.zPosition = 300
         cookiesLayer.addChild(scoreLabel)
         
-        let moveAction = SKAction.moveBy(CGVector(dx: 0, dy: 3), duration: 0.7)
-        moveAction.timingMode = .EaseOut
-        scoreLabel.runAction(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
+        let moveAction = SKAction.move(by: CGVector(dx: 0, dy: 3), duration: 0.7)
+        moveAction.timingMode = .easeOut
+        scoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         // 1
-        let touch = touches.first as! UITouch
-        let location = touch.locationInNode(cookiesLayer)
+        let touch = touches.first! as UITouch
+        let location = touch.location(in: cookiesLayer)
         // 2
         let (success, column, row) = convertPoint(location)
         if success {
             // 3
-            if let cookie = level.cookieAtColumn(column, row: row) {
+            if let cookie = level.cookieAtColumn(column: column, row: row) {
                 // 4
                 swipeFromColumn = column
                 swipeFromRow = row
@@ -293,13 +293,13 @@ class GameScene:SKScene {
         }
     }
     
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent){
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?){
         //1
         if swipeFromColumn == nil { return }
         
         //2
-        let touch = touches.first as! UITouch
-        let location = touch.locationInNode(cookiesLayer)
+        let touch = touches.first! as UITouch
+        let location = touch.location(in: cookiesLayer)
         
         let (success, column, row) = convertPoint(location)
         if success {
@@ -325,7 +325,7 @@ class GameScene:SKScene {
         }
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if selectionSprite.parent != nil && swipeFromColumn != nil {
             hideSelectionIndicator()
         }
@@ -333,7 +333,7 @@ class GameScene:SKScene {
         swipeFromRow = nil
     }
     
-    override func touchesCancelled(touches: Set<NSObject>, withEvent event: UIEvent){
-        touchesEnded(touches, withEvent: event)
-    }
+//    override func touchesCancelled(touches: Set<UITouch>, withEvent event: UIEvent?){
+//        touchesEnded(touches, withEvent: event)
+//    }
 }

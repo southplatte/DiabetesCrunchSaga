@@ -8,17 +8,17 @@
 
 import Foundation
 
-class Chain: Hashable, Printable {
+class Chain: Hashable, CustomStringConvertible {
     var cookies = [Cookie]()
     
-    enum ChainType: Printable {
-        case Horizontal
-        case Vertical
+    enum ChainType: CustomStringConvertible {
+        case horizontal
+        case vertical
         
         var description: String {
             switch self {
-            case .Horizontal: return "Horizontal"
-            case .Vertical: return "Vertical"
+            case .horizontal: return "Horizontal"
+            case .vertical: return "Vertical"
             }
         }
     }
@@ -31,7 +31,7 @@ class Chain: Hashable, Printable {
         self.chainType = chainType
     }
     
-    func addCookie(cookie: Cookie) {
+    func addCookie(_ cookie: Cookie) {
         cookies.append(cookie)
     }
     
@@ -52,7 +52,8 @@ class Chain: Hashable, Printable {
     }
     
     var hashValue: Int {
-        return reduce(cookies, 0) { $0.hashValue ^ $1.hashValue }
+        return cookies.reduce(0, {$0.hashValue ^ $1.hashValue})
+        //return reduce(cookies, 0) { $0.hashValue ^ $1.hashValue }
     }
 }
 

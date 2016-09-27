@@ -28,11 +28,12 @@ class Level {
             //2
             if let tilesArray:  AnyObject = dictionary["tiles"]{
                 //3
-                for(row, rowArray) in enumerate(tilesArray as! [[Int]]){
+                for(row, rowArray) in (tilesArray as! [[Int]]).enumerated(){
+                //for(row, rowArray) in enumerate(tilesArray as! [[Int]]){
                     //4
                     let tileRow = NumRows - row - 1
                     //5
-                    for(column, value) in enumerate(rowArray){
+                    for(column, value) in rowArray.enumerated(){
                         if value == 1{
                             tiles[column, tileRow] = Tile()
                         }
@@ -59,10 +60,10 @@ class Level {
     
     func shuffle() -> ASet<Cookie> {
         var set: ASet<Cookie>
-        do {
+        repeat {
             set = createInitialCookies()
             detectPossibleSwaps()
-            println("possible swaps: \(possibleSwaps)")
+            print("possible swaps: \(possibleSwaps)")
         }
         while possibleSwaps.count == 0
         
@@ -99,8 +100,8 @@ class Level {
                             cookies[column + 1, row] = cookie
                             
                             // Is either cookie now part of a chain?
-                            if hasChainAtColumn(column + 1, row: row) ||
-                                hasChainAtColumn(column, row: row) {
+                            if hasChainAtColumn(column: column + 1, row: row) ||
+                                hasChainAtColumn(column: column, row: row) {
                                     set.addElement(Swap(cookieA: cookie, cookieB: other))
                             }
                             
@@ -115,8 +116,8 @@ class Level {
                             cookies[column, row + 1] = cookie
                             
                             // Is either cookie now part of a chain?
-                            if hasChainAtColumn(column, row: row + 1) ||
-                                hasChainAtColumn(column, row: row) {
+                            if hasChainAtColumn(column: column, row: row + 1) ||
+                                hasChainAtColumn(column: column, row: row) {
                                     set.addElement(Swap(cookieA: cookie, cookieB: other))
                             }
                             
@@ -140,11 +141,11 @@ class Level {
         let horizontalChains = detectHorizontalMatches()
         let verticalChains = detectVerticalMatches()
         
-        removeCookies(horizontalChains)
-        removeCookies(verticalChains)
+        removeCookies(chains: horizontalChains)
+        removeCookies(chains: verticalChains)
         
-        calculateScores(horizontalChains)
-        calculateScores(verticalChains)
+        calculateScores(chains: horizontalChains)
+        calculateScores(chains: verticalChains)
         
         return horizontalChains.union(verticalChains)
     }
@@ -182,17 +183,19 @@ class Level {
     
     func topUpCookies() -> [[Cookie]] {
         var columns = [[Cookie]]()
-        var cookieType: CookieType = .Unknown
+        var cookieType: CookieType = .unknown
         
         for column in 0..<NumColumns {
             var array = [Cookie]()
             // 1
-            for var row = NumRows - 1; row >= 0 && cookies[column, row] == nil; --row {
+            var row = NumRows - 1;
+            row.stride(to: 0, by: -1).forEach(cookies[column, row]==nil) {
+            //for var row = NumRows - 1; row >= 0 && cookies[column, row] == nil; row -= 1 {
                 // 2
                 if tiles[column, row] != nil {
                     // 3
                     var newCookieType: CookieType
-                    do {
+                    repeat {
                         newCookieType = CookieType.random()
                     } while newCookieType == cookieType
                     cookieType = newCookieType
@@ -223,7 +226,7 @@ class Level {
                 if tiles[column, row] != nil{
                     // 2
                     var cookieType: CookieType
-                    do{
+                    repeat{
                         cookieType = CookieType.random()
                     }
                     while (column >= 2 && cookies[column - 1, row]?.cookieType == cookieType && cookies[column - 2, row]?.cookieType == cookieType) || (row >= 2 && cookies[column, row - 1]?.cookieType == cookieType && cookies[column, row - 2]?.cookieType == cookieType)
@@ -246,16 +249,16 @@ class Level {
         
         var horzLength = 1
         for var i = column - 1; i >= 0 && cookies[i, row]?.cookieType == cookieType;
-            --i, ++horzLength { }
+            i-=1, horzLength+=1 { }
         for var i = column + 1; i < NumColumns && cookies[i, row]?.cookieType == cookieType;
-            ++i, ++horzLength { }
+            i+=1, horzLength+=1 { }
         if horzLength >= 3 { return true }
         
         var vertLength = 1
         for var i = row - 1; i >= 0 && cookies[column, i]?.cookieType == cookieType;
-            --i, ++vertLength { }
+            i+=1, vertLength+=1 { }
         for var i = row + 1; i < NumRows && cookies[column, i]?.cookieType == cookieType;
-            ++i, ++vertLength { }
+            i+=1, vertLength+=1 { }
         return vertLength >= 3
     }
     
@@ -264,7 +267,7 @@ class Level {
         var set = Set<Chain>()
         // 2
         for row in 0..<NumRows {
-            for var column = 0; column < NumColumns - 2 ; {
+            for var column in 0..<NumColumns - 2 {
                 // 3
                 if let cookie = cookies[column, row] {
                     let matchType = cookie.cookieType
@@ -272,10 +275,10 @@ class Level {
                     if cookies[column + 1, row]?.cookieType == matchType &&
                         cookies[column + 2, row]?.cookieType == matchType {
                             // 5
-                            let chain = Chain(chainType: .Horizontal)
-                            do {
+                            let chain = Chain(chainType: .horizontal)
+                            repeat {
                                 chain.addCookie(cookies[column, row]!)
-                                ++column
+                                column += 1
                             }
                                 while column < NumColumns && cookies[column, row]?.cookieType == matchType
                             
@@ -284,7 +287,7 @@ class Level {
                     }
                 }
                 // 6
-                ++column
+                column += 1
             }
         }
         return set
@@ -294,17 +297,17 @@ class Level {
         var set = Set<Chain>()
         
         for column in 0..<NumColumns {
-            for var row = 0; row < NumRows - 2; {
+            for var row in 0..<(NumRows - 2) {
                 if let cookie = cookies[column, row] {
                     let matchType = cookie.cookieType
                     
                     if cookies[column, row + 1]?.cookieType == matchType &&
                         cookies[column, row + 2]?.cookieType == matchType {
                             
-                            let chain = Chain(chainType: .Vertical)
-                            do {
+                            let chain = Chain(chainType: .vertical)
+                            repeat {
                                 chain.addCookie(cookies[column, row]!)
-                                ++row
+                                row += 1
                             }
                                 while row < NumRows && cookies[column, row]?.cookieType == matchType
                             
@@ -312,7 +315,7 @@ class Level {
                             continue
                     }
                 }
-                ++row
+                row += 1
             }
         }
         return set
@@ -329,7 +332,7 @@ class Level {
     private func calculateScores(chains: Set<Chain>){
         for chain in chains {
             chain.score = 60 * (chain.length - 2) * comboMultiplier
-            ++comboMultiplier
+            comboMultiplier += 1
         }
     }
 }

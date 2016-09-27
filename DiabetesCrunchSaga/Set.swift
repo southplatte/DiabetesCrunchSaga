@@ -6,18 +6,18 @@
 //  Copyright (c) 2015 Sucker Punch Ltd. All rights reserved.
 //
 
-struct ASet<T: Hashable>: SequenceType, Printable {
-    private var dictionary = Dictionary<T, Bool>()
+struct ASet<T: Hashable>: Sequence, CustomStringConvertible {
+    fileprivate var dictionary = Dictionary<T, Bool>()
     
-    mutating func addElement(newElement: T) {
+    mutating func addElement(_ newElement: T) {
         dictionary[newElement] = true
     }
     
-    mutating func removeElement(element: T) {
+    mutating func removeElement(_ element: T) {
         dictionary[element] = nil
     }
     
-    func containsElement(element: T) -> Bool {
+    func containsElement(_ element: T) -> Bool {
         return dictionary[element] != nil
     }
     
@@ -29,7 +29,7 @@ struct ASet<T: Hashable>: SequenceType, Printable {
         return dictionary.count
     }
     
-    func unionSet(otherSet: ASet<T>) -> ASet<T> {
+    func unionSet(_ otherSet: ASet<T>) -> ASet<T> {
         var combined = ASet<T>()
         
         for obj in dictionary.keys {
@@ -43,8 +43,8 @@ struct ASet<T: Hashable>: SequenceType, Printable {
         return combined
     }
     
-    func generate() -> IndexingGenerator<Array<T>> {
-        return allElements().generate()
+    func makeIterator() -> IndexingIterator<Array<T>> {
+        return allElements().makeIterator()
     }
     
     var description: String {

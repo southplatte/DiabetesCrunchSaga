@@ -8,8 +8,8 @@
 
 import SpriteKit
 
-enum CookieType: Int, Printable {
-    case Unknown = 0, Croissant, Cupcake, Danish, Donut, Macaroon, SugarCookie
+enum CookieType: Int, CustomStringConvertible {
+    case unknown = 0, croissant, cupcake, danish, donut, macaroon, sugarCookie
     var spriteName: String {
         let spriteNames = [
             "Croissant",
@@ -33,7 +33,7 @@ enum CookieType: Int, Printable {
     }
 }
 
-class Cookie : Printable, Hashable {
+class Cookie : CustomStringConvertible, Hashable {
     var description: String{
         return "type:\(cookieType) square:(\(column), \(row))"
     }
