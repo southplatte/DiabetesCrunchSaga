@@ -229,7 +229,7 @@ class GameViewController: UIViewController {
     }
   }
   
-  func hideGameOver() {
+    @objc func hideGameOver() {
     view.removeGestureRecognizer(tapGestureRecognizer)
     tapGestureRecognizer = nil
     
